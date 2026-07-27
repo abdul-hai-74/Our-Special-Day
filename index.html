@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Date Request to Sinthia Payal ❤️</title>
+    <!-- JS Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #feada6 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 77, 109, 0.4);
+            font-size: 20px;
+            animation: float 6s ease-in infinite;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.3);
+            text-align: center;
+            width: 100%;
+            max-width: 440px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            z-index: 10;
+        }
+
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.6s ease-in-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 { color: #d81b60; margin-bottom: 10px; font-size: 25px; }
+        h2 { color: #c2185b; margin-bottom: 15px; font-size: 22px; }
+        p { color: #444; line-height: 1.6; font-size: 14px; }
+
+        .btn-group {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: linear-gradient(45deg, #ff4d6d, #ff758c);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.6);
+        }
+
+        #noBtn {
+            background: #8d99ae;
+            box-shadow: 0 4px 10px rgba(141, 153, 174, 0.3);
+            transition: 0.1s ease;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 14px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+            font-size: 13px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1.5px solid #ffccd5;
+            border-radius: 12px;
+            box-sizing: border-box;
+            outline: none;
+            font-family: inherit;
+            background: #fff;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: #ff4d6d;
+            box-shadow: 0 0 8px rgba(255, 77, 109, 0.3);
+        }
+
+        .custom-input {
+            margin-top: 8px;
+            display: none;
+        }
+
+        /* Single Profile Photo */
+        .photo-container {
+            width: 190px;
+            height: 190px;
+            margin: 0 auto 15px auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #ff758c;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .top-bar {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid #ff758c;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Music Icon Animation when playing */
+        .icon-btn.playing {
+            animation: pulse 1.5s infinite;
+            background-color: #ffe0e6;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 117, 140, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 117, 140, 0); }
+        }
+
+        .greeting-box {
+            background: #fff0f3;
+            padding: 18px;
+            border-radius: 15px;
+            text-align: left;
+            margin-top: 15px;
+            border: 1px dashed #ff4d6d;
+        }
+
+        .greeting-box p { margin: 8px 0; color: #2b2b2b; font-size: 13.5px; }
+
+        .countdown-box {
+            background: #ffebf0;
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #d81b60;
+            font-size: 15px;
+            border: 1px solid #ffccd5;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            max-width: 320px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Kaun Tujhe Female Acoustic Version Audio -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2023/11/04/audio_3f7f015948.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Floating Background Hearts -->
+    <div class="heart" style="left: 10%; animation-delay: 0s;">❤️</div>
+    <div class="heart" style="left: 25%; animation-delay: 2s;">💖</div>
+    <div class="heart" style="left: 40%; animation-delay: 4s;">✨</div>
+    <div class="heart" style="left: 60%; animation-delay: 1s;">🌸</div>
+    <div class="heart" style="left: 75%; animation-delay: 3s;">💕</div>
+    <div class="heart" style="left: 90%; animation-delay: 5s;">❤️</div>
+
+    <div class="card">
+        <!-- Top Icons Bar -->
+        <div class="top-bar">
+            <button class="icon-btn" onclick="openNote()" title="Secret Love Note">✉️</button>
+            <button class="icon-btn" id="musicBtn" onclick="toggleMusic()" title="Play/Pause Music">🎵</button>
+        </div>
+
+        <!-- Page 1: Welcome -->
+        <div id="page1" class="page active">
+            <div class="photo-container">
+                <img src="https://i.postimg.cc/VNK9Ndv9/Ours-Dream.jpg" alt="Sinthia Payal & Special Photo">
+            </div>
+
+            <h1>Hey Sinthia Payal! ✨</h1>
+            <p>You make my world so much brighter! Would you do me the honor of going on a special date with me?</p>
+            <div class="btn-group">
+                <button id="yesBtn" onclick="handleYes()">Yes, I'd love to! 💖</button>
+                <button id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()" onclick="handleNo()">No 😜</button>
+            </div>
+        </div>
+
+        <!-- Page 2: Date Details Form -->
+        <div id="page2" class="page">
+            <h2>Yay! 🎉 Let's Plan Our Date!</h2>
+            
+            <form id="dateForm" onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label>📅 Select Date & Time:</label>
+                    <input type="datetime-local" id="dateTime" name="Date_and_Time" required>
+                </div>
+
+                <!-- Locations Dropdown -->
+                <div class="form-group">
+                    <label>📍 Choose Location:</label>
+                    <select id="location" name="Location" onchange="toggleCustomInput('location', 'customLocation')">
+                        <option value="Curzon Hall 🏰">Curzon Hall 🏰</option>
+                        <option value="BUET Campus 🏛️">BUET Campus 🏛️</option>
+                        <option value="DU Mall Chhatar ☕">DU Mall Chhatar ☕</option>
+                        <option value="Sufia Kamal Hall 🌸">Sufia Kamal Hall 🌸</option>
+                        <option value="Ramna Park 🌳">Ramna Park 🌳</option>
+                        <option value="Suhrawardy Udyan 🌳">Suhrawardy Udyan 🌳</option>
+                        <option value="Rose Garden Park 🌹">Rose Garden Park 🌹</option>
+                        <option value="Military Museum 🏛️">Military Museum 🏛️</option>
+                        <option value="National Zoo 🦁">National Zoo 🦁</option>
+                        <option value="National Museum 🎨">National Museum 🎨</option>
+                        <option value="Lalbagh Fort 🏰">Lalbagh Fort 🏰</option>
+                        <option value="Zia Park 🌸">Zia Park 🌸</option>
+                        <option value="Ahsan Manzil 🏛️">Ahsan Manzil 🏛️</option>
+                        <option value="Cozy Rooftop Cafe ☕">Cozy Rooftop Cafe ☕</option>
+                        <option value="Other">Other Place (Type Below) ✏️</option>
+                    </select>
+                    <input type="text" id="customLocation" name="Custom_Location" class="custom-input" placeholder="Where would you like to go?">
+                </div>
+
+                <!-- Food Options -->
+                <div class="form-group">
+                    <label>🍔 What would you like to eat?</label>
+                    <select id="food" name="Food_Preference" onchange="toggleCustomInput('food', 'customFood')">
+                        <option value="Kacchi Biryani 🍲">Kacchi Biryani 🍲</option>
+                        <option value="Morog Polao 🍗">Morog Polao 🍗</option>
+                        <option value="Sizzling Kebab & Naan 🥙">Sizzling Kebab & Naan 🥙</option>
+                        <option value="Chicken Tandoori 🍗">Chicken Tandoori 🍗</option>
+                        <option value="Pasta & Noodles 🍝">Pasta & Noodles 🍝</option>
+                        <option value="Pizza 🍕">Pizza 🍕</option>
+                        <option value="Burger & Fries 🍔">Burger & Fries 🍔</option>
+                        <option value="Rice Bowl 🍚">Rice Bowl 🍚</option>
+                        <option value="Coffee & Dessert / Snacks ☕🍰">Coffee & Dessert / Snacks ☕🍰</option>
+                        <option value="Other">Other Food (Type Below) ✏️</option>
+                    </select>
+                    <input type="text" id="customFood" name="Custom_Food" class="custom-input" placeholder="What are you craving?">
+                </div>
+
+                <!-- Activity Choice -->
+                <div class="form-group">
+                    <label>🎬 What should we do after food?</label>
+                    <select id="activity" name="After_Food_Activity">
+                        <option value="Romantic Rickshaw Ride 🛺">Romantic Rickshaw Ride 🛺</option>
+                        <option value="Buying Flowers & Walking 💐">Buying Flowers & Walking 💐</option>
+                        <option value="Watch a Movie 🍿">Watch a Movie 🍿</option>
+                        <option value="Ice Cream Run 🍦">Ice Cream Run 🍦</option>
+                        <option value="Photobooth Session 📸">Photobooth Session 📸</option>
+                        <option value="Arcade Games & Bowling 🎳">Arcade Games & Bowling 🎳</option>
+                        <option value="Sunset / Lake View 🌅">Sunset / Lake View 🌅</option>
+                        <option value="Relaxing Night Walk 🌙">Relaxing Night Walk 🌙</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>👗 Outfit / Color Preference:</label>
+                    <input type="text" id="dress" name="Dress_Code" placeholder="E.g., Matching Blue, Casual, Black...">
+                </div>
+
+                <button type="submit" id="submitBtn">Confirm Date ✨</button>
+            </form>
+        </div>
+
+        <!-- Page 3: Greetings & Countdown -->
+        <div id="page3" class="page">
+            <div class="photo-container">
+                <img src="https://i.postimg.cc/VNK9Ndv9/Ours-Dream.jpg" alt="Sinthia Payal & Special Photo">
+            </div>
+            <h1>It's a Date! 🥰🌸</h1>
+            
+            <div class="greeting-box">
+                <p><strong>Dearest Sinthia Payal,</strong></p>
+                <p>Thank you so much for saying <strong>YES</strong>! Having you in my life is a true blessing, and I cannot wait to spend this beautiful quality time with you.</p>
+                <p>All your preferences have been noted, and I promise to make this day as extraordinary, sweet, and memorable as you are!</p>
+            </div>
+
+            <!-- Countdown Box -->
+            <div class="countdown-box" id="countdownBox">
+                ⏳ Date Countdown Loading...
+            </div>
+
+            <!-- Add to Calendar -->
+            <div class="btn-group">
+                <button onclick="addToCalendar()">Add to Google Calendar 📅</button>
+            </div>
+
+            <p style="font-size:18px; color:#d81b60; font-weight:bold; margin-top:15px;">See you very soon, my love! ❤️</p>
+        </div>
+    </div>
+
+    <!-- Secret Love Note Modal -->
+    <div id="noteModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeNote()">&times;</span>
+            <h3 style="color:#d81b60; margin-top:0;">A Secret Note For You 💌</h3>
+            <p style="color:#333; line-height:1.5;">"Every moment spent with you feels like a beautiful dream. Thank you for bringing so much joy and warmth into my life! ❤️"</p>
+        </div>
+    </div>
+
+    <script>
+        const FORMSPREE_URL = "https://formspree.io/f/meeyvvoj";
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        let musicPlaying = false;
+        let selectedDateTime = null;
+
+        // Function to try playing music (handles browser restrictions)
+        function playMusic() {
+            if (!musicPlaying) {
+                music.play().then(() => {
+                    musicPlaying = true;
+                    musicBtn.classList.add('playing');
+                    musicBtn.title = "Silence Music";
+                }).catch((error) => {
+                    console.log("Autoplay blocked. Waiting for user interaction.");
+                    musicPlaying = false;
+                    musicBtn.classList.remove('playing');
+                });
+            }
+        }
+
+        // Attempt autoplay on load (might be blocked)
+        window.addEventListener('load', playMusic);
+
+        // Play music on FIRST user interaction anywhere on the page
+        document.body.addEventListener('click', function initialPlay() {
+            if (!musicPlaying) {
+                playMusic();
+                // Remove this listener after first execution
+                document.body.removeEventListener('click', initialPlay);
+            }
+        }, { once: true });
+
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                music.pause();
+                musicPlaying = false;
+                musicBtn.classList.remove('playing');
+                musicBtn.title = "Play Music";
+            } else {
+                music.play().then(() => {
+                    musicPlaying = true;
+                    musicBtn.classList.add('playing');
+                    musicBtn.title = "Silence Music";
+                }).catch(e => console.log("Play failed", e));
+            }
+        }
+
+        // Confetti Function
+        function triggerConfetti() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
+        function handleYes() {
+            triggerConfetti();
+            // Ensure music plays when they say yes
+            if (!musicPlaying) playMusic();
+            nextPage(2);
+        }
+
+        function handleNo() {
+            alert("No please try again to date! 🥺💖");
+            nextPage(1);
+            const noBtn = document.getElementById('noBtn');
+            noBtn.style.position = 'static';
+        }
+
+        function nextPage(pageNumber) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById('page' + pageNumber).classList.add('active');
+        }
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${Math.max(20, x)}px`;
+            noBtn.style.top = `${Math.max(20, y)}px`;
+        }
+
+        function toggleCustomInput(selectId, customInputId) {
+            const selectVal = document.getElementById(selectId).value;
+            const customInput = document.getElementById(customInputId);
+            if (selectVal === 'Other') {
+                customInput.style.display = 'block';
+                customInput.required = true;
+            } else {
+                customInput.style.display = 'none';
+                customInput.required = false;
+            }
+        }
+
+        // Secret Note Functions
+        function openNote() { 
+            // Also trigger music if blocked earlier
+            if (!musicPlaying) playMusic();
+            document.getElementById('noteModal').style.display = 'flex'; 
+        }
+        function closeNote() { document.getElementById('noteModal').style.display = 'none'; }
+
+        // Countdown Timer Logic
+        function startCountdown(targetDate) {
+            function update() {
+                const now = new Date().getTime();
+                const diff = new Date(targetDate).getTime() - now;
+
+                if (diff <= 0) {
+                    document.getElementById('countdownBox').innerHTML = "🎉 Today is Our Special Date! ❤️";
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('countdownBox').innerHTML = 
+                    `⏳ <b>${days}d : ${hours}h : ${mins}m : ${secs}s</b> left for our Date! ✨`;
+            }
+            update();
+            setInterval(update, 1000);
+        }
+
+        // Google Calendar Event Link
+        function addToCalendar() {
+            if (!selectedDateTime) return alert("Date and Time not set!");
+            const startTime = new Date(selectedDateTime).toISOString().replace(/-|:|\.\d\d\d/g, "");
+            const endTime = new Date(new Date(selectedDateTime).getTime() + 2*60*60*1000).toISOString().replace(/-|:|\.\d\d\d/g, "");
+            
+            const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=Special+Date+With+Sinthia+Payal+❤️&dates=${startTime}/${endTime}&details=Our+Special+Date!+🥰`;
+            window.open(calUrl, '_blank');
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = "Sending... 💖";
+            submitBtn.disabled = true;
+
+            selectedDateTime = document.getElementById('dateTime').value;
+
+            const formData = new FormData(document.getElementById('dateForm'));
+
+            fetch(FORMSPREE_URL, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    triggerConfetti();
+                    nextPage(3);
+                    startCountdown(selectedDateTime);
+                } else {
+                    alert("Oops! Something went wrong, please try again.");
+                    submitBtn.innerText = "Confirm Date ✨";
+                    submitBtn.disabled = false;
+                }
+            }).catch(error => {
+                alert("Network error! Please check your connection.");
+                submitBtn.innerText = "Confirm Date ✨";
+                submitBtn.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>
